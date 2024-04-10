@@ -4,11 +4,17 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mps.dispositivo.Dispositivo;
-import org.mps.dispositivo.DispositivoSilver;
+import java.util.ArrayList;
+
+
 
 public class RonQI2SilverTest {
-
+    RonQI2 ronqi2 = new RonQI2Silver();
+    Dispositivo dispositivo = mock(Dispositivo.class);
+    
     /*
      * Analiza con los caminos base qué pruebas se han de realizar para comprobar
      * que al inicializar funciona como debe ser.
@@ -20,9 +26,6 @@ public class RonQI2SilverTest {
      */
     @Test
     public void inicializar_conAmbosDispositivosConectadosYConf_shouldReturnTrue() {
-        // Mock
-        Dispositivo dispositivo = mock(Dispositivo.class);
-
         // Define
         when(dispositivo.conectarSensorPresion()).thenReturn(true);
         when(dispositivo.conectarSensorSonido()).thenReturn(true);
@@ -30,7 +33,6 @@ public class RonQI2SilverTest {
         when(dispositivo.configurarSensorSonido()).thenReturn(true);
 
         // Execute
-        RonQI2 ronqi2 = new RonQI2Silver();
         ronqi2.anyadirDispositivo(dispositivo);
         boolean result = ronqi2.inicializar();
 
@@ -46,9 +48,6 @@ public class RonQI2SilverTest {
 
     @Test
     public void inicializar_conDispositivoPresionConectadoYConf_shouldReturnFalse() {
-        // Mock
-        Dispositivo dispositivo = mock(Dispositivo.class);
-
         // Define
         when(dispositivo.conectarSensorPresion()).thenReturn(true);
         when(dispositivo.configurarSensorPresion()).thenReturn(true);
@@ -56,7 +55,7 @@ public class RonQI2SilverTest {
         when(dispositivo.configurarSensorSonido()).thenReturn(false);
 
         // Execute
-        RonQI2 ronqi2 = new RonQI2Silver();
+        
         ronqi2.anyadirDispositivo(dispositivo);
         boolean result = ronqi2.inicializar();
 
@@ -70,8 +69,6 @@ public class RonQI2SilverTest {
 
     @Test
     public void inicializar_conDispositivoSonidoConectadoYConf_shouldReturnFalse() {
-        // Mock
-        Dispositivo dispositivo = mock(Dispositivo.class);
 
         // Define
         when(dispositivo.conectarSensorPresion()).thenReturn(false);
@@ -80,7 +77,7 @@ public class RonQI2SilverTest {
         when(dispositivo.configurarSensorSonido()).thenReturn(true);
 
         // Execute
-        RonQI2 ronqi2 = new RonQI2Silver();
+        
         ronqi2.anyadirDispositivo(dispositivo);
         boolean result = ronqi2.inicializar();
 
@@ -94,9 +91,6 @@ public class RonQI2SilverTest {
 
     @Test
     public void inicializar_conDispositivoSonidoConectadoYNoConf_shouldReturnFalse() {
-        // Mock
-        Dispositivo dispositivo = mock(Dispositivo.class);
-
         // Define
         when(dispositivo.conectarSensorPresion()).thenReturn(true);
         when(dispositivo.configurarSensorPresion()).thenReturn(false);
@@ -104,7 +98,7 @@ public class RonQI2SilverTest {
         when(dispositivo.configurarSensorSonido()).thenReturn(true);
 
         // Execute
-        RonQI2 ronqi2 = new RonQI2Silver();
+        
         ronqi2.anyadirDispositivo(dispositivo);
         boolean result = ronqi2.inicializar();
 
@@ -119,9 +113,6 @@ public class RonQI2SilverTest {
 
     @Test
     public void inicializar_conDispositivoPresionConectadoYNoConf_shouldReturnFalse() {
-        // Mock
-        Dispositivo dispositivo = mock(Dispositivo.class);
-
         // Define
         when(dispositivo.conectarSensorPresion()).thenReturn(true);
         when(dispositivo.configurarSensorPresion()).thenReturn(true);
@@ -129,7 +120,7 @@ public class RonQI2SilverTest {
         when(dispositivo.configurarSensorSonido()).thenReturn(false);
 
         // Execute
-        RonQI2 ronqi2 = new RonQI2Silver();
+        
         ronqi2.anyadirDispositivo(dispositivo);
         boolean result = ronqi2.inicializar();
 
@@ -149,15 +140,12 @@ public class RonQI2SilverTest {
      */
     @Test
     public void inicializar_llamaUnaVezAConf(){
-        // Mock
-        Dispositivo dispositivo = mock(Dispositivo.class);
-
         //Define
         when(dispositivo.conectarSensorPresion()).thenReturn(true);
         when(dispositivo.conectarSensorSonido()).thenReturn(true);
 
         //Execute
-        RonQI2 ronqi2 = new RonQI2Silver();
+        
         ronqi2.anyadirDispositivo(dispositivo);
         ronqi2.inicializar();
 
@@ -178,14 +166,11 @@ public class RonQI2SilverTest {
 
      @Test
      public void reconectar_cuandoAmbosDispositivoSeConectan_shouldReturnTrue(){
-
-        Dispositivo dispositivo = mock(Dispositivo.class);
-
         when(dispositivo.conectarSensorPresion()).thenReturn(true);
         when(dispositivo.conectarSensorSonido()).thenReturn(true);
         when(dispositivo.estaConectado()).thenReturn(false);
 
-        RonQI2 ronqi2 = new RonQI2Silver();
+        
         ronqi2.anyadirDispositivo(dispositivo);
         boolean result = ronqi2.reconectar();
 
@@ -197,14 +182,11 @@ public class RonQI2SilverTest {
 
      @Test
      public void reconectar_cuandoDispositivoPresionNoConectadoYSonidoConectado_shouldReturnFalse(){
-
-        Dispositivo dispositivo = mock(Dispositivo.class);
-
         when(dispositivo.conectarSensorPresion()).thenReturn(false);
         when(dispositivo.conectarSensorSonido()).thenReturn(true);
         when(dispositivo.estaConectado()).thenReturn(false);
 
-        RonQI2 ronqi2 = new RonQI2Silver();
+        
         ronqi2.anyadirDispositivo(dispositivo);
         boolean result = ronqi2.reconectar();
 
@@ -216,14 +198,11 @@ public class RonQI2SilverTest {
 
      @Test
      public void reconectar_cuandoDispositivoPresionConectadoYSonidoNoConectado_shouldReturnFalse(){
-
-        Dispositivo dispositivo = mock(Dispositivo.class);
-
         when(dispositivo.conectarSensorPresion()).thenReturn(true);
         when(dispositivo.conectarSensorSonido()).thenReturn(false);
         when(dispositivo.estaConectado()).thenReturn(false);
 
-        RonQI2 ronqi2 = new RonQI2Silver();
+        
         ronqi2.anyadirDispositivo(dispositivo);
         boolean result = ronqi2.reconectar();
 
@@ -235,14 +214,11 @@ public class RonQI2SilverTest {
 
      @Test
      public void reconectar_conAmbosYaContectados_shouldReturnFalse(){
-
-        Dispositivo dispositivo = mock(Dispositivo.class);
-
         when(dispositivo.conectarSensorPresion()).thenReturn(false);
         when(dispositivo.conectarSensorSonido()).thenReturn(false);
         when(dispositivo.estaConectado()).thenReturn(true);
 
-        RonQI2 ronqi2 = new RonQI2Silver();
+        
         ronqi2.anyadirDispositivo(dispositivo);
         boolean result = ronqi2.reconectar();
 
@@ -254,10 +230,7 @@ public class RonQI2SilverTest {
 
      @Test
      public void estaConectado_whenNotConnected_shouldReturnFalse(){
-        Dispositivo dispositivo = mock(Dispositivo.class);
         when(dispositivo.estaConectado()).thenReturn(false);
-
-        RonQI2 ronqi2 = new RonQI2Silver();
         ronqi2.anyadirDispositivo(dispositivo);
         boolean result = ronqi2.estaConectado();
 
@@ -268,10 +241,7 @@ public class RonQI2SilverTest {
 
      @Test
      public void estaConectado_whenConnected_shouldReturnTrue(){
-        Dispositivo dispositivo = mock(Dispositivo.class);
         when(dispositivo.estaConectado()).thenReturn(true);
-
-        RonQI2 ronqi2 = new RonQI2Silver();
         ronqi2.anyadirDispositivo(dispositivo);
         boolean result = ronqi2.estaConectado();
 
@@ -287,7 +257,46 @@ public class RonQI2SilverTest {
      * se considera que hay una apnea en proceso. Si hay menos de 5 lecturas también
      * debería realizar la media.
      */
+    @Test
+    public void EvaluarApnea_shouldReturnTrue_ifAverageIsUnder_30(){
+        //add dispositivo
+        ronqi2.anyadirDispositivo(dispositivo);
+        //ramdom float
+        ArrayList<Float> floats = new ArrayList<>();
+        floats.add(12.00f);
+        floats.add(20.00f);
+        floats.add(10.00f);
+        floats.add(31.00f);
+        floats.add(31.00f);
+        floats.add(31.00f);
 
+        for (int i = 0; i < floats.size(); i++) {
+            when(dispositivo.leerSensorPresion()).thenReturn(floats.get(i));
+            ronqi2.obtenerNuevaLectura();
+        }
+        //Average is under 30, result must be false
+        assertTrue(ronqi2.evaluarApneaSuenyo());
+    }
+
+    @Test
+    public void EvaluarApnea_shouldReturnFalse_ifAverageIsOver_30(){
+        //add dispositivo
+        ronqi2.anyadirDispositivo(dispositivo);
+        //ramdom float
+        ArrayList<Float> floats = new ArrayList<>();
+        floats.add(50.00f);
+        floats.add(42.00f);
+        floats.add(30.00f);
+        floats.add(31.00f);
+
+        for (int i = 0; i < floats.size(); i++) {
+            when(dispositivo.leerSensorPresion()).thenReturn(floats.get(i));
+            ronqi2.obtenerNuevaLectura();
+        }
+
+        //Average is over 30, result must be false
+        assertFalse(ronqi2.evaluarApneaSuenyo());
+    }
 
     /*
      * Realiza un primer test para ver que funciona bien independientemente del
@@ -297,4 +306,16 @@ public class RonQI2SilverTest {
      * https://junit.org/junit5/docs/current/user-guide/index.html#writing-tests-
      * parameterized-tests
      */
+
+    @ParameterizedTest
+    @ValueSource(floats = { 20.00f, 30.00f,40.00f })
+    public void evaluar(float pali) {
+        ronqi2.anyadirDispositivo(dispositivo);
+        when(dispositivo.leerSensorPresion()).thenReturn(pali);
+        ronqi2.obtenerNuevaLectura();
+
+        ronqi2.evaluarApneaSuenyo();
+    }
+
+
 }
