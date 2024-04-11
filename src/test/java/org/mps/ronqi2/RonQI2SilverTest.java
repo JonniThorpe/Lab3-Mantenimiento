@@ -296,6 +296,7 @@ public class RonQI2SilverTest {
 
         //Average is over 30, result must be false
         assertFalse(ronqi2.evaluarApneaSuenyo());
+
     }
 
     /*
@@ -309,12 +310,17 @@ public class RonQI2SilverTest {
 
     @ParameterizedTest
     @ValueSource(floats = { 20.00f, 30.00f,40.00f })
-    public void evaluar(float pali) {
+    public void Evaluates_Each_Parameterized_Value(float pali) {
         ronqi2.anyadirDispositivo(dispositivo);
         when(dispositivo.leerSensorPresion()).thenReturn(pali);
         ronqi2.obtenerNuevaLectura();
 
         ronqi2.evaluarApneaSuenyo();
+        if(pali>30.00f){
+            assertFalse(ronqi2.evaluarApneaSuenyo());
+        }else{
+            assertTrue(ronqi2.evaluarApneaSuenyo());
+        }
     }
 
 
